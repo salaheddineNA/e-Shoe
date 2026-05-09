@@ -1,5 +1,5 @@
 [build]
-builder = "dockerfile"
+builder = "nixpacks"
 
 [deploy]
 healthcheckPath = "/health"
@@ -17,3 +17,6 @@ DB_DATABASE = "/tmp/database.sqlite"
 SESSION_DRIVER = "file"
 CACHE_STORE = "file"
 TRUSTED_PROXIES = "*"
+
+[phases.setup]
+nixPkgs = ["php82", "php82Extensions.pdo", "php82Extensions.pdo_sqlite", "php82Extensions.gd", "php82Extensions.xml", "php82Extensions.bcmath", "php82Extensions.zip", "composer", "nodejs_20"]

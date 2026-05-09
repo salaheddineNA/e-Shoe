@@ -1,0 +1,22 @@
+[phases.setup]
+nixPkgs = ["php82", "php82Extensions.pdo", "php82Extensions.pdo_sqlite", "php82Extensions.gd", "php82Extensions.xml", "php82Extensions.bcmath", "php82Extensions.zip", "php82Extensions.mbstring", "php82Extensions.tokenizer", "php82Extensions ctype", "php82Extensions.fileinfo", "composer", "nodejs_20"]
+
+[phases.build]
+cmds = [
+    "composer install --no-dev --optimize-autoloader --no-interaction",
+    "npm install",
+    "npm run build"
+]
+
+[phases.start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
+
+[variables]
+APP_ENV = "production"
+APP_DEBUG = "false"
+APP_URL = "https://${{RAILWAY_PUBLIC_DOMAIN}}"
+DB_CONNECTION = "sqlite"
+DB_DATABASE = "/tmp/database.sqlite"
+SESSION_DRIVER = "file"
+CACHE_STORE = "file"
+TRUSTED_PROXIES = "*"
