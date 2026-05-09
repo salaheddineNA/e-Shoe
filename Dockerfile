@@ -2,11 +2,38 @@ FROM php:8.2-cli
 
 WORKDIR /var/www/html
 
+# Install system dependencies and PHP extensions
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install pdo_mysql pdo_sqlite bcmath gd xml
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Copy application files
 COPY . .
 
+# Install Composer dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Copy environment file
+RUN cp .env.example .env
+
+# Generate application key
+RUN php artisan key:generate
+
 # Create healthcheck file
 RUN echo "OK" > public/health.txt
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port
 EXPOSE 8000
