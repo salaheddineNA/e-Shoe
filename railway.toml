@@ -6,7 +6,7 @@ healthcheckPath = "/health.html"
 healthcheckTimeout = 180
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 15
-startCommand = "chmod +x simple-server.sh && ./simple-server.sh"
+startCommand = "/bin/sh -c 'chmod +x simple-server.sh && ./simple-server.sh'"
 
 [env]
 APP_ENV = "production"
