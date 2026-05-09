@@ -15,7 +15,8 @@ class ForceHttps
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (app()->environment('production') && !$request->secure()) {
+        // Only force HTTPS if not behind a proxy (like Railway)
+        if (app()->environment('production') && !$request->secure() && !$request->hasHeader('X-Forwarded-Proto')) {
             return redirect()->secure($request->getRequestUri());
         }
 
