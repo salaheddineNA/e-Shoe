@@ -2,11 +2,11 @@
 builder = "nixpacks"
 
 [deploy]
-healthcheckPath = "/health.txt"
+healthcheckPath = "/health"
 healthcheckTimeout = 180
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 15
-startCommand = "chmod +x start.sh && ./start.sh"
+startCommand = "chmod +x start-health.sh && ./start-health.sh"
 
 [env]
 APP_ENV = "production"
