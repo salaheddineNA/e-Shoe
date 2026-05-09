@@ -18,6 +18,11 @@ Route::get('/up', function () {
     return response()->json(['status' => 'healthy', 'service' => 'Laravel'], 200);
 });
 
+Route::get('/health.txt', function () {
+    return response('OK', 200)
+        ->header('Content-Type', 'text/plain');
+});
+
 Route::get('/ping', function () {
     return response()->json(['pong' => true], 200);
 });
@@ -59,6 +64,12 @@ Route::get('/system-fix', [App\Http\Controllers\SystemCheckController::class, 'f
 Route::get('/db-diagnose', [App\Http\Controllers\DatabaseFixController::class, 'diagnose']);
 Route::get('/db-fix', [App\Http\Controllers\DatabaseFixController::class, 'fix']);
 Route::get('/db-reset', [App\Http\Controllers\DatabaseFixController::class, 'reset']);
+
+// Healthcheck route for Railway
+Route::get('/health.txt', function () {
+    return response('OK', 200)
+        ->header('Content-Type', 'text/plain');
+});
 
 Route::get('/', [ProductController::class, 'home'])->name('home');
 
