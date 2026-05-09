@@ -20,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Railway gère HTTPS automatiquement, pas besoin de forcer le schéma
+        // Force HTTPS in production
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
