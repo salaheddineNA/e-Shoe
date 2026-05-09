@@ -1,0 +1,17 @@
+runtime: php
+env: flex
+
+runtime_config:
+  document_root: public
+
+# Ensure we skip .env files
+skip_files:
+  - .env
+  - .env.*
+  - storage/
+  - vendor/
+  - node_modules/
+
+handlers:
+- url: /.*
+  script: public/index.php
