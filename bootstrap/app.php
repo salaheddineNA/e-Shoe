@@ -18,12 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'force.https' => \App\Http\Middleware\ForceHttps::class,
         ]);
         
-        // Apply ForceHttps to all web routes in production ONLY if not behind proxy
-        if (!app()->environment('production') || !isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-            $middleware->web(append: [
-                \App\Http\Middleware\ForceHttps::class,
-            ]);
-        }
+        // Apply ForceHttps to all web routes - the middleware itself handles environment checking
+        $middleware->web(append: [
+            \App\Http\Middleware\ForceHttps::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
